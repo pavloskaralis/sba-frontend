@@ -130,19 +130,19 @@ export class SuggestionComponent implements OnInit {
   //sends user's selection to database for any future relational table implementation
   addSelection(request) {
     // console.log("raw request", request)
-    JSON.stringify(request);
-    this.dictionary.addSelection(request)
-      .subscribe( response => {
-        // console.log("added selection:",response)
-      }, (error: Response) => {
-        if(error.status === 404) {
-          console.log(error.status)
-        } else if (error.status === 400) {
-          console.log(error.status)
-        } else {
-          console.log(error.status)
-        }
-      })
+    // JSON.stringify(request);
+    // this.dictionary.addSelection(request)
+    //   .subscribe( response => {
+    //     // console.log("added selection:",response)
+    //   }, (error: Response) => {
+    //     if(error.status === 404) {
+    //       console.log(error.status)
+    //     } else if (error.status === 400) {
+    //       console.log(error.status)
+    //     } else {
+    //       console.log(error.status)
+    //     }
+    //   })
   }
 
   constructor(private dictionary: DictionaryService) { }
