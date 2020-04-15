@@ -721,6 +721,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onChange",
         value: function onChange() {
+          console.log("on change", this.content);
           this.setContent(); // setTimeout(()=> this.checkMisspelledChange(), 0);
         } //set content buffer for suggestion submit emit or manual user change
 
@@ -737,14 +738,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "setContent",
         value: function setContent() {
-          console.log("Live:", this.contentBodyContainer.nativeElement.textContent);
-          var noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/Suggestions.+?[^(Found)](Ignore|Submit)/, "").replace(/No\sSuggestions.+?(FoundIgnore|FoundSubmit)/g, "");
-          this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
-          this.content = noTrim.trim().replace(/\u00A0/g, "").replace(/\s{2,}/g, " ");
-          console.log("set:", this.content);
-          this.splitContent = this.content.split(/\s+/); // console.log("split",this.splitContent);
+          var _this2 = this;
 
-          this.setWordCount();
+          console.log("Live:", this.contentBodyContainer.nativeElement.textContent);
+          var noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
+          this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
+          setTimeout(function () {
+            _this2.content = noTrim.replace(/\s{2,}/g, " ").trim();
+            console.log("set:", _this2.content);
+            _this2.splitContent = _this2.content.split(/\s+/); // console.log("split",this.splitContent);
+
+            _this2.setWordCount();
+          }, 0);
         }
       }, {
         key: "setWordCount",
@@ -755,7 +760,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "checkContent",
         value: function checkContent() {
-          var _this2 = this;
+          var _this3 = this;
 
           //configure to empty stay
           this.popup = false;
@@ -766,22 +771,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.dictionary.checkContent(request).subscribe(function (response) {
             // console.log("raw response", response["results"])
-            var configuredResponse = _this2.configureResponse(response["results"]);
+            var configuredResponse = _this3.configureResponse(response["results"]);
 
             setTimeout(function () {
-              _this2.response = configuredResponse;
+              _this3.response = configuredResponse;
 
-              _this2.setContent(); // console.log("configured response", this.response)
+              _this3.setContent(); // console.log("configured response", this.response)
 
 
-              _this2.misspellings = _this2.response.filter(function (result) {
+              _this3.misspellings = _this3.response.filter(function (result) {
                 return result.misspelled;
               });
-              _this2.loading = false;
+              _this3.loading = false;
 
-              if (_this2.misspellings.length === 0) {
-                _this2.popup = true;
-                _this2.status = {
+              if (_this3.misspellings.length === 0) {
+                _this3.popup = true;
+                _this3.status = {
                   message: "No Misspellings Found",
                   check: true
                 };
@@ -890,8 +895,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "eraseContent",
         value: function eraseContent() {
-          var _this3 = this;
-
           this.response = [{
             word: " ",
             suggestions: [],
@@ -900,9 +903,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.popup = false;
           this.misspellings = [];
           this.ignored = [];
-          setTimeout(function () {
-            return _this3.setContent();
-          }, 0);
+          this.buffer();
         }
       }, {
         key: "closePopup",
@@ -1006,7 +1007,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "SBA Spell Checker");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "S.B.A. Spell Checker");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1708,8 +1709,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.result.word = suggestion;
           this.result.misspelled = false; // setTimeout(()=>{
 
-          this.setRequest.next();
-          console.log("request sent"); // });
+          this.setRequest.next(); // console.log("request sent")
+          // });
         } //sends user's selection to database for any future relational table implementation
 
       }, {

@@ -368,6 +368,7 @@ class ContentComponent {
     }
     //tracks user input to body content
     onChange() {
+        console.log("on change", this.content);
         this.setContent();
         // setTimeout(()=> this.checkMisspelledChange(), 0);
     }
@@ -378,13 +379,15 @@ class ContentComponent {
     //configure text content for api request
     setContent() {
         console.log("Live:", this.contentBodyContainer.nativeElement.textContent);
-        let noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/Suggestions.+?[^(Found)](Ignore|Submit)/, "").replace(/No\sSuggestions.+?(FoundIgnore|FoundSubmit)/g, "");
+        let noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
         this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
-        this.content = noTrim.trim().replace(/\u00A0/g, "").replace(/\s{2,}/g, " ");
-        console.log("set:", this.content);
-        this.splitContent = this.content.split(/\s+/);
-        // console.log("split",this.splitContent);
-        this.setWordCount();
+        setTimeout(() => {
+            this.content = noTrim.replace(/\s{2,}/g, " ").trim();
+            console.log("set:", this.content);
+            this.splitContent = this.content.split(/\s+/);
+            // console.log("split",this.splitContent);
+            this.setWordCount();
+        }, 0);
     }
     setWordCount() {
         this.splitContent[0] === "" ? this.wordcount = 0 : this.wordcount = this.splitContent.length;
@@ -505,7 +508,7 @@ class ContentComponent {
         this.popup = false;
         this.misspellings = [];
         this.ignored = [];
-        setTimeout(() => this.setContent(), 0);
+        this.buffer();
     }
     closePopup() {
         this.popup = false;
@@ -577,7 +580,7 @@ ContentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "SBA Spell Checker");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "S.B.A. Spell Checker");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 4);
@@ -936,7 +939,7 @@ class SuggestionComponent {
         this.result.misspelled = false;
         // setTimeout(()=>{
         this.setRequest.next();
-        console.log("request sent");
+        // console.log("request sent")
         // });
     }
     //sends user's selection to database for any future relational table implementation
