@@ -1,0 +1,45 @@
+@import '../../styles.scss';
+
+
+.button {
+    width: 80px;
+    height: 40px;
+    background-color: $black;
+    border-radius: 10px;
+    font-family: $fontA;
+    font-size: 15.5px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+    line-height: 12px;
+    @media(max-width: $breakpointE){
+        font-size: 14px;
+        width: 68px;
+        height: 34px;
+    }
+    @media(max-width: $breakpointF){
+        font-size: 12px;
+        height: 30px; 
+        width: 60px;
+    }
+    &:hover {
+        background-color: lighten($black, 5%);
+    }
+}
+
+.check {
+    color: $yellow;
+}
+
+.copy {
+    color: $pink; 
+} 
+
+.erase {
+    color: $red; 
+} 
+

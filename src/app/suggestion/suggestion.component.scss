@@ -1,0 +1,109 @@
+@import '../../styles.scss';
+
+
+.dropdown-z-index {
+   z-index: 2;
+}
+
+.suggestion-container {
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    transform: translateZ(0);
+
+        .misspelling{
+            @extend .word;
+            background-color: $yellow;
+            cursor: pointer;
+            &:focus { 
+                outline: none;
+            }
+        }
+
+        .dropdown-active {
+            display: inline-flex !important;
+        }
+
+        .dropdown-row {
+            width: 220px;
+            height: 26px;
+            background-color: $white; 
+            box-sizing: border-box;
+            padding: 0 10px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 14px;
+            font-family: $fontA;
+            cursor: pointer;
+        }
+
+        .dropdown-row-hover {
+            &:hover {
+                background-color: darken($white,5%);
+            }
+        }
+  
+        .dropdown-right-overflow {
+            right: 0 !important;
+        }
+        .dropdown-bottom-overflow {
+            bottom: 0 !important;
+        }
+        
+        .dropdown-container {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+        
+            .dropdown-fill {
+                @extend .dropdown-row;
+                background-color: transparent;
+                height: 24px; 
+                cursor: default;
+            }
+
+            .dropdown-body {
+                background: red; 
+                display: flex;
+                flex-direction: column;
+                box-shadow: $boxShadow;
+
+
+                .dropdown-title {
+                    @extend .dropdown-row;
+                    background-color: $pink;
+                    font-weight: 600;
+                    cursor: default;
+                }
+    
+                .dropdown-suggestion {
+                    @extend .dropdown-row, .dropdown-row-hover;
+                }
+                
+                .dropdown-no-suggestion {
+                    @extend .dropdown-row;
+                    color: darken($white, 40%);
+                    cursor: default;
+                }
+                .dropdown-other {
+                    @extend .dropdown-row, .dropdown-row-hover;
+                    outline: none;
+                    border: none;
+                    border-top: 1px solid darken($white, 20%);
+                    color: $black; 
+                    cursor: text;
+                }
+                .dropdown-ignore {
+                    @extend .dropdown-row, .dropdown-row-hover;
+
+                    border-top: 1px solid darken($white, 20%);
+                }
+            
+            }
+           
+
+        }
+
+}
+

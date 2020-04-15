@@ -1,0 +1,279 @@
+@import '../../styles.scss';
+
+.preload {
+    animation-duration: 0s !important;
+}
+
+.content-container{
+    $border-radius: 25px;
+    width: $breakpointB;
+    height: $breakpointD;
+    margin: 0 auto;
+    border-radius: $border-radius;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: $boxShadow;
+    transition: .75s;
+
+    @media(max-width: $breakpointA) {
+        width: $breakpointC;
+    }
+    @media(max-width: $breakpointB) {
+        width: $breakpointD;
+    }
+    @media(max-width: $breakpointD) {
+        width: 100vw;
+        height: 100vh; 
+        border-radius: 0;
+        transition: 0s;
+    }
+    @media(max-height: $breakpointD) {
+        height: 100vh; 
+    }
+    // @media(max-height: $breakpointD) and (max-width: $breakpointD) { 
+    //     transition: 0s;
+    //     border-radius: 0;
+    // }
+
+    .inner-content {
+        box-sizing: border-box;
+        display: flex; 
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 20px;
+        transition: .75s; 
+
+        @media(max-height: $breakpointD) and (max-width: $breakpointD) { 
+            transition: 0s;
+        }
+    }
+
+    .content-header {
+        @extend .inner-content;
+
+        width: 100%;
+        min-height: 50px; 
+        background-color: $orange;
+        border-radius: $border-radius $border-radius 0 0;
+
+        @media(max-width: $breakpointD) { 
+            border-radius: 0;
+        }
+
+        .header-title {
+            @extend .vertical-align;
+            font-family: $fontA;
+            font-weight: 600;
+            font-size: 20px;
+            color: $white;
+            cursor: default;
+            @media(max-width: $breakpointE){
+                font-size: 18px;
+            }
+
+            @media(max-width: $breakpointF){
+                font-size: 16px;
+            }
+        }
+
+        .resize-container {
+            @extend .vertical-align;
+
+            width: 50px;
+            height: 50px;
+            
+            .resize-button {
+                border-radius: 100px;
+                padding: 5px;
+                width: 25px;
+                height: 25px;
+                background-image: url('./resize.png');
+                background-size: 25px;
+                background-repeat: no-repeat;
+                background-position: center;
+                margin: 0 0 0 auto;
+                cursor: pointer;
+                
+                &:hover {
+                    background-color: lighten($orange, 10%);
+                }
+            }
+
+            @media(max-width: $breakpointD) { 
+                display: none; 
+            }
+
+        }
+
+        @media(max-width: $breakpointD) { 
+            justify-content: center; 
+        }
+    }
+
+    .content-body-container {
+        width: 100%;
+        height: 100%;
+        background-color: $white;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .content-body {
+            width: 100%;
+            height: 100%;
+            max-width: 100vw;
+            color: $black;
+            font-family: $fontB;
+            line-height: 26px;
+            box-sizing: border-box;
+            padding: 16px 0 16px 20px;
+            cursor: text;
+            
+            color: $black;
+            font-family: $fontB;
+            line-break: loose;
+
+            &:focus {
+                outline: none;
+            }
+
+            .correct-container {
+                display: inline-flex;
+                flex-direction: column;
+                    
+                .correct-spelling {
+                    @extend .word;
+            
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+
+        .buffer {
+            min-width: .1px;
+            min-height: .1px;
+            position: absolute;
+            display: inline;
+        }
+
+
+    }
+
+    .content-footer {
+        @extend .inner-content;
+
+        width: 100%;
+        min-height: 100px; 
+        background-color: $orange;
+        border-radius: 0 0 $border-radius $border-radius;
+
+       
+        @media(max-width: $breakpointD) { 
+            border-radius: 0;
+        }
+
+        .word-count {
+            @extend .vertical-align; 
+            margin-right: 20px;
+            font-family: $fontA;
+            color: $white;
+            font-weight: 600;
+            cursor: default;
+            font-size: 15.5px;
+            // @media(max-width: $breakpointD) {
+            //     text-align: center;
+            //     max-width: 120px;
+            // }
+            @media(max-width: $breakpointE){
+                max-width: 100px;
+                font-size: 14px;
+                // text-align: center;
+            }
+
+            @media(max-width: $breakpointF){
+                max-width: 56px;
+                font-size: 12px;
+                // text-align: center;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            height: 100%;
+            width: 280px;
+            // transition: .75s;
+            @media(max-width: $breakpointE){
+                width: 245px;
+            }
+
+            @media(max-width: $breakpointF){
+                width: 215px;
+            }
+
+            .button-wrap {
+                @extend .vertical-align;
+            }
+        }
+    }
+}
+
+.content-container-shrink {
+    animation: shrink; 
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 1.25s; 
+    transition: .75s; 
+    @media(max-width: $breakpointD) { 
+        transition: 0s;
+    }
+}
+
+.content-container-grow {
+    animation: grow; 
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-fill-mode: forwards;
+    animation-duration: .75s; 
+    border-radius: 0;
+}
+
+.inner-content-full {
+    border-radius: 0px !important; 
+    transition: .75s !important;
+}
+
+@keyframes grow {
+    from {
+        transition: .75s;
+        min-width: 0;
+        min-height: 0; 
+    }
+    to{ 
+        transition: 0s; 
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+}
+
+@keyframes shrink {
+    from {
+        min-width: 100vw;
+        min-height: 100vh; 
+    }
+    to{ 
+        min-width: 0;
+        min-height: 0; 
+    }
+}
+
+.disabled-content {
+    pointer-events: none;
+}
+
+.disabled-buttons {
+    transition: .75s; 
+    opacity: .85;
+    pointer-events: none;
+}
