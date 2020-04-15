@@ -13,7 +13,7 @@
                 <suggestion *ngIf="result.misspelled" [result]="result"  [wordID]="index" (ignoreRequest)="addIgnored(result.word)" (setRequest)="buffer()">  </suggestion>
 
                 <span *ngIf="!result.misspelled" class="correct-container">
-                    <div id="correct" class="correct-spelling" ng-bind-html="&nbsp;" >
+                    <div class="correct-spelling" ng-bind-html="&nbsp;" >
                         {{ index !== response.length - 1 && response[index + 1].word !== "" ? result.word + "&nbsp;" : result.word }}
                         <br *ngIf="index === response.length - 1 && result.word === '' "/>
                     </div> 
