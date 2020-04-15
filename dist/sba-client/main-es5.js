@@ -756,7 +756,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this3 = this;
 
           //configure to empty stay
-          this.popup = false;
+          // this.popup = false;
+          this.status = {
+            message: "Loading...",
+            check: true
+          };
           this.loading = true;
           if (this.content.length === 0) this.content = " ";
           var request = {
@@ -777,14 +781,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return result.misspelled;
               });
               _this3.loading = false;
-
-              if (_this3.misspellings.length === 0) {
-                _this3.popup = true;
-                _this3.status = {
-                  message: "No Misspellings Found",
-                  check: true
-                };
-              }
+              _this3.popup = true;
+              _this3.status = _this3.misspellings.length === 0 ? {
+                message: "No Misspellings Found",
+                check: true
+              } : {
+                message: "Click A Word To Edit",
+                check: true
+              };
             }, 0);
           }, function (error) {
             if (error.status === 404) {
