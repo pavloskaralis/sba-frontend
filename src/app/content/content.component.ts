@@ -56,9 +56,9 @@ export class ContentComponent implements OnInit {
   //configure text content for api request
   setContent () {
     console.log("Live:",this.contentBodyContainer.nativeElement.textContent)
-    let noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/Suggestions.+?[^(Found)](Ignore|Submit)/,"").replace(/No\sSuggestions.+?(FoundIgnore|FoundSubmit)/g,"");
+    let noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/[^(No)]\sSuggestions.+?[^(Found)](Ignore|Submit)/g,"").replace(/No\sSuggestions\s(FoundIgnore|FoundSubmit)/g,"");
     this.lastChar = noTrim.split("")[noTrim.length -1].charCodeAt(0);
-    this.content = noTrim.trim().replace(/\u00A0/g,"").replace(/\s{2,}/g," ");
+    this.content = noTrim.replace(/\s{1,}/g," ").trim();
     console.log("set:", this.content)
     this.splitContent = this.content.split(/\s+/);
     // console.log("split",this.splitContent);
@@ -184,7 +184,7 @@ export class ContentComponent implements OnInit {
     this.popup = false; 
     this.misspellings= [];
     this.ignored = [];
-    setTimeout(()=> this.setContent(), 0); 
+    this.buffer();
   }
 
   closePopup() {
