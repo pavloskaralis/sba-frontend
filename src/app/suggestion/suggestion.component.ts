@@ -122,7 +122,7 @@ export class SuggestionComponent implements OnInit {
     this.result.misspelled = false; 
     // setTimeout(()=>{
     this.setRequest.next()
-      console.log("request sent")
+      // console.log("request sent")
     // });
   }
 
