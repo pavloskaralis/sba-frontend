@@ -282,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const _c0 = ["contentBodyContainer"];
+const _c0 = ["contentBody"];
 function ContentComponent_popup_6_Template(rf, ctx) { if (rf & 1) {
     const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "popup", 16);
@@ -366,26 +366,22 @@ class ContentComponent {
     resize() {
         this.fullScreen = !this.fullScreen;
     }
-    //tracks user input to body content
-    onChange() {
-        console.log("on change", this.content);
-        this.setContent();
-        // setTimeout(()=> this.checkMisspelledChange(), 0);
-    }
     //set content buffer for suggestion submit emit or manual user change
     buffer() {
         setTimeout(() => this.setContent(), 0);
     }
     //configure text content for api request
     setContent() {
-        console.log("Live:", this.contentBodyContainer.nativeElement.textContent);
-        let noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
-        this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
+        console.log("Live:", this.contentBody.nativeElement.textContent);
+        let noTrim = this.contentBody.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
+        this.lastChar;
+        if (noTrim)
+            this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
         setTimeout(() => {
-            this.content = noTrim.replace(/\s{2,}/g, " ").trim();
+            this.content = noTrim.replace(/\s{2,}/g, " ").replace(/\u00A0/g, " ").trim();
             console.log("set:", this.content);
             this.splitContent = this.content.split(/\s+/);
-            // console.log("split",this.splitContent);
+            console.log("split", this.splitContent);
             this.setWordCount();
         }, 0);
     }
@@ -397,16 +393,18 @@ class ContentComponent {
         //configure to empty stay
         this.popup = false;
         this.loading = true;
+        if (this.content.length === 0)
+            this.content = " ";
         let request = { content: this.content };
         // console.log("request",this.content)
         this.dictionary.checkContent(request)
             .subscribe(response => {
-            // console.log("raw response", response["results"])
+            console.log("raw response", response["results"]);
             let configuredResponse = this.configureResponse(response["results"]);
             setTimeout(() => {
                 this.response = configuredResponse;
                 this.setContent();
-                // console.log("configured response", this.response)
+                console.log("configured response", this.response);
                 this.misspellings = this.response.filter(result => result.misspelled);
                 this.loading = false;
                 if (this.misspellings.length === 0) {
@@ -549,20 +547,24 @@ class ContentComponent {
                 this.keys = [];
             }
             //format text on paste
-            document.addEventListener("paste", (event) => {
-                let paste = (event.clipboardData).getData('text');
-                const selection = window.getSelection();
-                if (!selection.rangeCount)
-                    return false;
-                selection.deleteFromDocument();
-                selection.getRangeAt(0).insertNode(document.createTextNode(paste));
-                event.preventDefault();
-                this.setContent();
-                selection.empty();
-                // let id = "last";
-                // console.log("element", document.getElementById(id),id)
-                // document.getElementById(id).focus()
-            });
+            // document.addEventListener("paste", (event) => {
+            // let paste = (event.clipboardData).getData('text/plain');
+            // event.preventDefault();
+            // event.clipboardData["bubbles"] = false; 
+            // // console.log(event)
+            // const selection = window.getSelection();
+            // if (!selection.rangeCount) return false;
+            // selection.deleteFromDocument();
+            // selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+            // selection.removeAllRanges();
+            // this.setContent();
+            // console.log(document.getElementById("content-body"))
+            // setTimeout(()=> {
+            //   let content = document.getElementById("content-body");
+            //   content.click();
+            //   content.focus();
+            // }, 0);
+            //   });
         });
         //required to avoid initial animation for resize button transition 
         setTimeout(() => {
@@ -575,8 +577,8 @@ ContentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵviewQuery"](_c0, true);
     } if (rf & 2) {
         var _t;
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.contentBodyContainer = _t.first);
-    } }, decls: 22, vars: 19, consts: [[1, "content-container", "content-container-shrink"], [1, "content-header"], [1, "header-title"], [1, "resize-container"], [1, "resize-button", 3, "click"], [3, "status", "closeRequest", 4, "ngIf"], [4, "ngIf"], ["autoFocus", "", "id", "content-body", 1, "content-body-container"], ["contenteditable", "", "spellcheck", "false", 1, "content-body", 3, "input"], ["contentBodyContainer", ""], [4, "ngFor", "ngForOf"], [1, "content-footer"], [1, "word-count"], [1, "button-container"], [1, "button-wrap"], [3, "buttonType", "click"], [3, "status", "closeRequest"], [3, "result", "wordID", "ignoreRequest", "setRequest", 4, "ngIf"], ["class", "correct-container", 4, "ngIf"], [3, "result", "wordID", "ignoreRequest", "setRequest"], [1, "correct-container"], ["ng-bind-html", "\u00A0", 1, "correct-spelling"]], template: function ContentComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.contentBody = _t.first);
+    } }, decls: 22, vars: 19, consts: [[1, "content-container", "content-container-shrink"], [1, "content-header"], [1, "header-title"], [1, "resize-container"], [1, "resize-button", 3, "click"], [3, "status", "closeRequest", 4, "ngIf"], [4, "ngIf"], [1, "content-body-container"], ["autofocus", "", "id", "content-body", "contenteditable", "", "spellcheck", "false", 1, "content-body", 3, "input"], ["contentBody", ""], [4, "ngFor", "ngForOf"], [1, "content-footer"], [1, "word-count"], [1, "button-container"], [1, "button-wrap"], [3, "buttonType", "click"], [3, "status", "closeRequest"], [3, "result", "wordID", "ignoreRequest", "setRequest", 4, "ngIf"], ["class", "correct-container", 4, "ngIf"], [3, "result", "wordID", "ignoreRequest", "setRequest"], [1, "correct-container"], ["id", "correct", "ng-bind-html", "\u00A0", 1, "correct-spelling"]], template: function ContentComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -592,7 +594,7 @@ ContentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, ContentComponent_spinner_7_Template, 1, 0, "spinner", 6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 8, 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("input", function ContentComponent_Template_div_input_9_listener() { return ctx.onChange(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("input", function ContentComponent_Template_div_input_9_listener() { return ctx.setContent(); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, ContentComponent_ng_container_11_Template, 3, 2, "ng-container", 10);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -652,9 +654,9 @@ ContentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
                 templateUrl: './content.component.html',
                 styleUrls: ['./content.component.scss']
             }]
-    }], function () { return [{ type: _dictionary_service__WEBPACK_IMPORTED_MODULE_1__["DictionaryService"] }]; }, { contentBodyContainer: [{
+    }], function () { return [{ type: _dictionary_service__WEBPACK_IMPORTED_MODULE_1__["DictionaryService"] }]; }, { contentBody: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"],
-            args: ["contentBodyContainer"]
+            args: ["contentBody"]
         }] }); })();
 
 
@@ -676,6 +678,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class DictionaryService {
+    // private url = "http://localhost:8080/"
     constructor(http) {
         this.http = http;
         this.url = 'https://sba-spell-checker-api.herokuapp.com/';

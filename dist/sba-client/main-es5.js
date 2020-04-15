@@ -552,7 +552,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*! ../suggestion/suggestion.component */
     "./src/app/suggestion/suggestion.component.ts");
 
-    var _c0 = ["contentBodyContainer"];
+    var _c0 = ["contentBody"];
 
     function ContentComponent_popup_6_Template(rf, ctx) {
       if (rf & 1) {
@@ -716,13 +716,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "resize",
         value: function resize() {
           this.fullScreen = !this.fullScreen;
-        } //tracks user input to body content
-
-      }, {
-        key: "onChange",
-        value: function onChange() {
-          console.log("on change", this.content);
-          this.setContent(); // setTimeout(()=> this.checkMisspelledChange(), 0);
         } //set content buffer for suggestion submit emit or manual user change
 
       }, {
@@ -740,13 +733,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function setContent() {
           var _this2 = this;
 
-          console.log("Live:", this.contentBodyContainer.nativeElement.textContent);
-          var noTrim = this.contentBodyContainer.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
-          this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
+          console.log("Live:", this.contentBody.nativeElement.textContent);
+          var noTrim = this.contentBody.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
+          this.lastChar;
+          if (noTrim) this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
           setTimeout(function () {
-            _this2.content = noTrim.replace(/\s{2,}/g, " ").trim();
+            _this2.content = noTrim.replace(/\s{2,}/g, " ").replace(/\u00A0/g, " ").trim();
             console.log("set:", _this2.content);
-            _this2.splitContent = _this2.content.split(/\s+/); // console.log("split",this.splitContent);
+            _this2.splitContent = _this2.content.split(/\s+/);
+            console.log("split", _this2.splitContent);
 
             _this2.setWordCount();
           }, 0);
@@ -765,20 +760,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           //configure to empty stay
           this.popup = false;
           this.loading = true;
+          if (this.content.length === 0) this.content = " ";
           var request = {
             content: this.content
           }; // console.log("request",this.content)
 
           this.dictionary.checkContent(request).subscribe(function (response) {
-            // console.log("raw response", response["results"])
+            console.log("raw response", response["results"]);
+
             var configuredResponse = _this3.configureResponse(response["results"]);
 
             setTimeout(function () {
               _this3.response = configuredResponse;
 
-              _this3.setContent(); // console.log("configured response", this.response)
+              _this3.setContent();
 
-
+              console.log("configured response", _this3.response);
               _this3.misspellings = _this3.response.filter(function (result) {
                 return result.misspelled;
               });
@@ -951,22 +948,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this4.keys = [];
             } //format text on paste
+            // document.addEventListener("paste", (event) => {
+            // let paste = (event.clipboardData).getData('text/plain');
+            // event.preventDefault();
+            // event.clipboardData["bubbles"] = false; 
+            // // console.log(event)
+            // const selection = window.getSelection();
+            // if (!selection.rangeCount) return false;
+            // selection.deleteFromDocument();
+            // selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+            // selection.removeAllRanges();
+            // this.setContent();
+            // console.log(document.getElementById("content-body"))
+            // setTimeout(()=> {
+            //   let content = document.getElementById("content-body");
+            //   content.click();
+            //   content.focus();
+            // }, 0);
+            //   });
 
-
-            document.addEventListener("paste", function (event) {
-              var paste = event.clipboardData.getData('text');
-              var selection = window.getSelection();
-              if (!selection.rangeCount) return false;
-              selection.deleteFromDocument();
-              selection.getRangeAt(0).insertNode(document.createTextNode(paste));
-              event.preventDefault();
-
-              _this4.setContent();
-
-              selection.empty(); // let id = "last";
-              // console.log("element", document.getElementById(id),id)
-              // document.getElementById(id).focus()
-            });
           }); //required to avoid initial animation for resize button transition 
 
           setTimeout(function () {
@@ -993,12 +993,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         if (rf & 2) {
           var _t;
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.contentBodyContainer = _t.first);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.contentBody = _t.first);
         }
       },
       decls: 22,
       vars: 19,
-      consts: [[1, "content-container", "content-container-shrink"], [1, "content-header"], [1, "header-title"], [1, "resize-container"], [1, "resize-button", 3, "click"], [3, "status", "closeRequest", 4, "ngIf"], [4, "ngIf"], ["autoFocus", "", "id", "content-body", 1, "content-body-container"], ["contenteditable", "", "spellcheck", "false", 1, "content-body", 3, "input"], ["contentBodyContainer", ""], [4, "ngFor", "ngForOf"], [1, "content-footer"], [1, "word-count"], [1, "button-container"], [1, "button-wrap"], [3, "buttonType", "click"], [3, "status", "closeRequest"], [3, "result", "wordID", "ignoreRequest", "setRequest", 4, "ngIf"], ["class", "correct-container", 4, "ngIf"], [3, "result", "wordID", "ignoreRequest", "setRequest"], [1, "correct-container"], ["ng-bind-html", "\xA0", 1, "correct-spelling"]],
+      consts: [[1, "content-container", "content-container-shrink"], [1, "content-header"], [1, "header-title"], [1, "resize-container"], [1, "resize-button", 3, "click"], [3, "status", "closeRequest", 4, "ngIf"], [4, "ngIf"], [1, "content-body-container"], ["autofocus", "", "id", "content-body", "contenteditable", "", "spellcheck", "false", 1, "content-body", 3, "input"], ["contentBody", ""], [4, "ngFor", "ngForOf"], [1, "content-footer"], [1, "word-count"], [1, "button-container"], [1, "button-wrap"], [3, "buttonType", "click"], [3, "status", "closeRequest"], [3, "result", "wordID", "ignoreRequest", "setRequest", 4, "ngIf"], ["class", "correct-container", 4, "ngIf"], [3, "result", "wordID", "ignoreRequest", "setRequest"], [1, "correct-container"], ["id", "correct", "ng-bind-html", "\xA0", 1, "correct-spelling"]],
       template: function ContentComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -1034,7 +1034,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 8, 9);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("input", function ContentComponent_Template_div_input_9_listener() {
-            return ctx.onChange();
+            return ctx.setContent();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, ContentComponent_ng_container_11_Template, 3, 2, "ng-container", 10);
@@ -1164,9 +1164,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           type: _dictionary_service__WEBPACK_IMPORTED_MODULE_1__["DictionaryService"]
         }];
       }, {
-        contentBodyContainer: [{
+        contentBody: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"],
-          args: ["contentBodyContainer"]
+          args: ["contentBody"]
         }]
       });
     })();
@@ -1207,6 +1207,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
 
     var DictionaryService = /*#__PURE__*/function () {
+      // private url = "http://localhost:8080/"
       function DictionaryService(http) {
         _classCallCheck(this, DictionaryService);
 

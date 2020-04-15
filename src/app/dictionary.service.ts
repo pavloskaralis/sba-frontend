@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 })
 export class DictionaryService {
   private url = 'https://sba-spell-checker-api.herokuapp.com/'
-
+  // private url = "http://localhost:8080/"
   constructor(private http: HttpClient) { }
 
   checkContent (request) {
