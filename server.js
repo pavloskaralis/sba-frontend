@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static(path.join(__dirname, '/sba_frontend/dist')));
+app.use(express.static(path.join(__dirname, '/dist/sba-client')));
 
 app.get('/*', function(req,res) {
     
