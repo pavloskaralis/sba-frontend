@@ -17,7 +17,8 @@ export class DictionaryService {
   }
 
   addSelection (request) {
-    return this.http.post(this.url, request)
+    //disabled due to free database
+    // return this.http.post(this.url, request)
   }
 
 }
