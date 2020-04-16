@@ -874,7 +874,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "eraseContent",
         value: function eraseContent() {
-          console.log("erased");
+          // console.log("erased")
           this.response = [{
             word: " ",
             suggestions: [],
@@ -914,8 +914,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
             if ((e.keyCode === 46 || e.keyCode === 8) && (_this4.content.length < 2 || _this4.misspellings[0] && _this4.content.length === _this4.misspellings[0].word.length)) {
-              console.log("blocked");
-
+              // console.log("blocked")
               if (e.preventDefault) {
                 e.preventDefault();
               } else {
@@ -925,8 +924,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this4.eraseContent(); // if control a delete swap with erase method
 
             } else if ((e.keyCode === 46 || e.keyCode === 8) && _this4.keys.length === 3) {
-              console.log("switched");
-
+              // console.log("switched")
               if (e.preventDefault) {
                 e.preventDefault();
               } else {
@@ -937,8 +935,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this4.keys = []; // if control c
             } else if (e.keyCode === 67 && _this4.keys.length > 1 && window.getSelection().getRangeAt(0).toString().length >= _this4.content.length) {
-              console.log("coppied");
-
+              // console.log("coppied")
               if (e.preventDefault) {
                 e.preventDefault();
               } else {
@@ -952,9 +949,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               document.execCommand('copy');
               document.body.removeChild(textarea);
               _this4.keys = [];
-            }
-
-            console.log(window.getSelection().getRangeAt(0).toString().length); //format text on paste
+            } //format text on paste
             // document.addEventListener("paste", (event) => {
             // let paste = (event.clipboardData).getData('text/plain');
             // event.preventDefault();
@@ -973,6 +968,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             //   content.focus();
             // }, 0);
             //   });
+
           }); //required to avoid initial animation for resize button transition 
 
           setTimeout(function () {

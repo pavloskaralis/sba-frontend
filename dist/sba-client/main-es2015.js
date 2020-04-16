@@ -481,7 +481,7 @@ class ContentComponent {
     }
     //erase button
     eraseContent() {
-        console.log("erased");
+        // console.log("erased")
         this.response = [{ word: " ", suggestions: [], misspelled: false }];
         this.popup = false;
         this.misspellings = [];
@@ -510,7 +510,7 @@ class ContentComponent {
             //if backspace with no content disable delete
             // console.log(this.response.length, this.misspellings.length === 1)
             if ((e.keyCode === 46 || e.keyCode === 8) && (this.content.length < 2 || (this.misspellings[0] && this.content.length === this.misspellings[0].word.length))) {
-                console.log("blocked");
+                // console.log("blocked")
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
@@ -521,7 +521,7 @@ class ContentComponent {
                 // if control a delete swap with erase method
             }
             else if ((e.keyCode === 46 || e.keyCode === 8) && this.keys.length === 3) {
-                console.log("switched");
+                // console.log("switched")
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
@@ -533,7 +533,7 @@ class ContentComponent {
                 // if control c
             }
             else if (e.keyCode === 67 && this.keys.length > 1 && (window.getSelection().getRangeAt(0).toString().length >= this.content.length)) {
-                console.log("coppied");
+                // console.log("coppied")
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
@@ -548,7 +548,6 @@ class ContentComponent {
                 document.body.removeChild(textarea);
                 this.keys = [];
             }
-            console.log(window.getSelection().getRangeAt(0).toString().length);
             //format text on paste
             // document.addEventListener("paste", (event) => {
             // let paste = (event.clipboardData).getData('text/plain');
