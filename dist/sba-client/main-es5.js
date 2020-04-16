@@ -908,12 +908,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               case 2:
                 _this4.keys.length === 2 && (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 67) ? _this4.keys.push(e.keyCode) : _this4.keys = [];
-            } //if backspace with no content disable delete
+            } // console.log("content:", this.content.length, "response:", this.response.length, "misspelled:", this.misspellings[0].word.length)
+            //if backspace with no content disable delete
+            // console.log(this.response.length, this.misspellings.length === 1)
 
 
-            console.log(_this4.response.length, _this4.misspellings.length === 1);
-
-            if ((e.keyCode === 46 || e.keyCode === 8) && (_this4.content.length < 2 || _this4.response.length === 2 && _this4.misspellings.length === 1)) {
+            if ((e.keyCode === 46 || e.keyCode === 8) && (_this4.content.length < 2 || _this4.content.length === _this4.misspellings[0].word.length)) {
               console.log("blocked");
 
               if (e.preventDefault) {
@@ -1014,7 +1014,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "S.B.A. Spell Checker");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "SBA Spell Checker");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 

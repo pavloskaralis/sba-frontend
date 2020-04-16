@@ -504,9 +504,10 @@ class ContentComponent {
                     break;
                 case 2: this.keys.length === 2 && (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 67) ? this.keys.push(e.keyCode) : this.keys = [];
             }
+            // console.log("content:", this.content.length, "response:", this.response.length, "misspelled:", this.misspellings[0].word.length)
             //if backspace with no content disable delete
-            console.log(this.response.length, this.misspellings.length === 1);
-            if ((e.keyCode === 46 || e.keyCode === 8) && (this.content.length < 2 || (this.response.length === 2 && this.misspellings.length === 1))) {
+            // console.log(this.response.length, this.misspellings.length === 1)
+            if ((e.keyCode === 46 || e.keyCode === 8) && (this.content.length < 2 || this.content.length === this.misspellings[0].word.length)) {
                 console.log("blocked");
                 if (e.preventDefault) {
                     e.preventDefault();
@@ -582,7 +583,7 @@ ContentComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "S.B.A. Spell Checker");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "SBA Spell Checker");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "div", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 5);
