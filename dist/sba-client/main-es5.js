@@ -903,17 +903,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 break;
 
               case 1:
-                _this4.keys.length === 1 && (e.keyCode === 65 || e.keyCode == 67) ? _this4.keys.push(e.keyCode) : _this4.keys = [];
+                _this4.keys.length === 1 && (e.keyCode === 65 || e.keyCode == 67) ? _this4.keys.push(e.keyCode) : e.keyCode === 224 || e.keyCode === 91 || e.keyCode === 17 ? _this4.keys = [e.keyCode] : _this4.keys = [];
                 break;
 
               case 2:
-                _this4.keys.length === 2 && (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 67) ? _this4.keys.push(e.keyCode) : _this4.keys = [];
+                _this4.keys.length === 2 && (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 67) ? _this4.keys.push(e.keyCode) : e.keyCode === 224 || e.keyCode === 91 || e.keyCode === 17 ? _this4.keys = [e.keyCode] : _this4.keys = [];
             } // console.log("content:", this.content.length, "response:", this.response.length, "misspelled:", this.misspellings[0].word.length)
             //if backspace with no content disable delete
             // console.log(this.response.length, this.misspellings.length === 1)
 
 
-            if ((e.keyCode === 46 || e.keyCode === 8) && (_this4.content.length < 2 || _this4.content.length === _this4.misspellings[0].word.length)) {
+            if ((e.keyCode === 46 || e.keyCode === 8) && (_this4.content.length < 2 || _this4.misspellings[0] && _this4.content.length === _this4.misspellings[0].word.length)) {
               console.log("blocked");
 
               if (e.preventDefault) {
@@ -936,7 +936,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this4.eraseContent();
 
               _this4.keys = []; // if control c
-            } else if (e.keyCode === 67 && _this4.keys.length > 1) {
+            } else if (e.keyCode === 67 && _this4.keys.length > 1 && window.getSelection().getRangeAt(0).toString().length >= _this4.content.length) {
               console.log("coppied");
 
               if (e.preventDefault) {
@@ -952,7 +952,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               document.execCommand('copy');
               document.body.removeChild(textarea);
               _this4.keys = [];
-            } //format text on paste
+            }
+
+            console.log(window.getSelection().getRangeAt(0).toString().length); //format text on paste
             // document.addEventListener("paste", (event) => {
             // let paste = (event.clipboardData).getData('text/plain');
             // event.preventDefault();
@@ -971,7 +973,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             //   content.focus();
             // }, 0);
             //   });
-
           }); //required to avoid initial animation for resize button transition 
 
           setTimeout(function () {
@@ -1006,7 +1007,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       consts: [[1, "content-wrap"], [1, "content-container", "content-container-shrink"], [1, "content-header"], [1, "header-title"], [1, "resize-container"], [1, "resize-button", 3, "click"], [3, "status", "closeRequest", 4, "ngIf"], [4, "ngIf"], [1, "content-body-container"], ["autofocus", "", "id", "content-body", "contenteditable", "", "spellcheck", "false", 1, "content-body", 3, "input"], ["contentBody", ""], [4, "ngFor", "ngForOf"], [1, "content-footer"], [1, "word-count"], [1, "button-container"], [1, "button-wrap"], [3, "buttonType", "click"], [3, "status", "closeRequest"], [3, "result", "wordID", "ignoreRequest", "setRequest", 4, "ngIf"], ["class", "correct-container", 4, "ngIf"], [3, "result", "wordID", "ignoreRequest", "setRequest"], [1, "correct-container"], ["ng-bind-html", "\xA0", 1, "correct-spelling"]],
       template: function ContentComponent_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "span", 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
 
