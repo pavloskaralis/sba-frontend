@@ -31,7 +31,7 @@ export class ContentComponent implements OnInit {
   //pop up toggle for no misspellings and clipboard copied
   popup: boolean = false; 
   //message for popup
-  status: {message: string, check: boolean};
+  status: {message: string, type: string};
   //track keydown for select all delete
   keys: number[] = [];
 
@@ -71,7 +71,7 @@ export class ContentComponent implements OnInit {
   checkContent () {
     //configure to empty stay
     // this.popup = false;
-    this.status = {message: "Loading...", check: true};
+    this.status = {message: "Loading...", type: "checl" };
     this.loading = true;
     if(this.content.length === 0) this.content = " ";
     let request = {content: this.content}
@@ -88,7 +88,7 @@ export class ContentComponent implements OnInit {
             this.loading = false; 
           
             this.popup = true;
-            this.status = this.misspellings.length === 0 ? {message: "No Misspellings Found", check: true} : {message: "Click A Word To Edit", check: true};
+            this.status = this.misspellings.length === 0 ? {message: "No Misspellings Found", type: "check"} : {message: "Click A Word To Edit", type: "check"};
             
           },0);
       }, (error: Response) => {
@@ -99,6 +99,8 @@ export class ContentComponent implements OnInit {
         } else {
           console.log(error.status)
         }
+        this.popup = true;
+        this.status = {message: "Please Use Plain Text", type: "error"};
       })
   }
 
@@ -108,7 +110,6 @@ export class ContentComponent implements OnInit {
     let createResult = word => {return {word: word, suggestions: [], misspelled: false}};
     //re-add spacing and any removed characters from plural to singular conversion by api
     for(let i = 0; i < response.length; i++) {
-      let lastLoop = response.length - 1;
       let result = response[i];
       let request = this.splitContent[i];
       let lastIndex = request.split("").length - 1;
@@ -156,7 +157,7 @@ export class ContentComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(textarea);
     this.popup = true;
-    this.status = {message: "Copied To Clipboard", check: false};
+    this.status = {message: "Copied To Clipboard", type: "copy"};
   }
 
   //erase button
