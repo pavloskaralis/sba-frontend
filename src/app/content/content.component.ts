@@ -56,11 +56,10 @@ export class ContentComponent implements OnInit {
     setTimeout( ()=> {
       let collate = new Intl.Collator();
       this.content = noTrim.replace(/\u00A0+/g," ").replace(/\s{2,}/g," ").trim();
-      console.log("set:", this.content)      
+      // console.log("set:", this.content)      
       this.splitContent = this.content.split(/\s+/);
-      console.log("split",this.splitContent);
+      // console.log("split",this.splitContent);
       this.setWordCount();
-      console.log(this.content.charCodeAt(3),this.content.charCodeAt(4),this.splitContent[0].charCodeAt(0))
     },0); 
   }
 

@@ -737,7 +737,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var noTrim = this.contentBody.nativeElement.textContent.replace(/(No\sSuggestions)/g, "NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g, " ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g, " ");
           if (noTrim) this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
           setTimeout(function () {
-            _this2.content = noTrim.replace(/\s{2,}/g, " ").replace(/\u00A0/g, " ").trim(); // console.log("set:", this.content)      
+            var collate = new Intl.Collator();
+            _this2.content = noTrim.replace(/\u00A0+/g, " ").replace(/\s{2,}/g, " ").trim(); // console.log("set:", this.content)      
 
             _this2.splitContent = _this2.content.split(/\s+/); // console.log("split",this.splitContent);
 
@@ -838,10 +839,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 result.word = request;
                 configuredResponse.push(result);
               }
-            } //don't consider ignored words as misspelled
+            } //don't consider ignored words as misspelled or numbers
 
 
-            if (this.ignored.indexOf(result.word) !== -1) result.misspelled = false; //add space between words except for end
+            if (this.ignored.indexOf(result.word) !== -1 || result.word.match(/^\d+$/)) result.misspelled = false; //add space between words except for end
 
             if (result.misspelled) configuredResponse.push(createResult(""));
           }

@@ -377,7 +377,8 @@ class ContentComponent {
         if (noTrim)
             this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
         setTimeout(() => {
-            this.content = noTrim.replace(/\s{2,}/g, " ").replace(/\u00A0/g, " ").trim();
+            let collate = new Intl.Collator();
+            this.content = noTrim.replace(/\u00A0+/g, " ").replace(/\s{2,}/g, " ").trim();
             // console.log("set:", this.content)      
             this.splitContent = this.content.split(/\s+/);
             // console.log("split",this.splitContent);
@@ -455,8 +456,8 @@ class ContentComponent {
                     configuredResponse.push(result);
                 }
             }
-            //don't consider ignored words as misspelled
-            if (this.ignored.indexOf(result.word) !== -1)
+            //don't consider ignored words as misspelled or numbers
+            if ((this.ignored.indexOf(result.word) !== -1) || result.word.match(/^\d+$/))
                 result.misspelled = false;
             //add space between words except for end
             if (result.misspelled)
