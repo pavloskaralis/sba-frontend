@@ -50,15 +50,17 @@ export class ContentComponent implements OnInit {
   }
   //configure text content for api request
   setContent () {
-    console.log("Live:",this.contentBody.nativeElement.textContent)
+    // console.log("Live:",this.contentBody.nativeElement.textContent)
     let noTrim = this.contentBody.nativeElement.textContent.replace(/(No\sSuggestions)/g,"NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g," ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g," ");
     if(noTrim) this.lastChar = noTrim.split("")[noTrim.length -1].charCodeAt(0);
     setTimeout( ()=> {
-      this.content = noTrim.replace(/\s{2,}/g," ").replace(/\u00A0/g," ").trim();
+      let collate = new Intl.Collator();
+      this.content = noTrim.replace(/\u00A0+/g," ").replace(/\s{2,}/g," ").trim();
       console.log("set:", this.content)      
       this.splitContent = this.content.split(/\s+/);
-      // console.log("split",this.splitContent);
+      console.log("split",this.splitContent);
       this.setWordCount();
+      console.log(this.content.charCodeAt(3),this.content.charCodeAt(4),this.splitContent[0].charCodeAt(0))
     },0); 
   }
 
