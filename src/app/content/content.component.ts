@@ -61,9 +61,6 @@ export class ContentComponent implements OnInit {
       // console.log("split",this.splitContent);
       this.setWordCount();
 
-      for(let i = 0; i < 20; i++){
-              console.log(this.content.charCodeAt(i));
-      }
     },0); 
   }
 

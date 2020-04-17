@@ -743,10 +743,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _this2.splitContent = _this2.content.split(/\s+/); // console.log("split",this.splitContent);
 
             _this2.setWordCount();
-
-            for (var i = 0; i < 20; i++) {
-              console.log(_this2.content.charCodeAt(i));
-            }
           }, 0);
         }
       }, {

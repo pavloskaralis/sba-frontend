@@ -383,9 +383,6 @@ class ContentComponent {
             this.splitContent = this.content.split(/\s+/);
             // console.log("split",this.splitContent);
             this.setWordCount();
-            for (let i = 0; i < 20; i++) {
-                console.log(this.content.charCodeAt(i));
-            }
         }, 0);
     }
     setWordCount() {
