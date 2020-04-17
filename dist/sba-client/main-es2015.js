@@ -455,8 +455,8 @@ class ContentComponent {
                     configuredResponse.push(result);
                 }
             }
-            //don't consider ignored words as misspelled or numbers
-            if ((this.ignored.indexOf(result.word) !== -1) || result.word.match(/^\d+$/))
+            //don't consider ignored words as misspelled
+            if (this.ignored.indexOf(result.word) !== -1)
                 result.misspelled = false;
             //add space between words except for end
             if (result.misspelled)
@@ -683,10 +683,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class DictionaryService {
+    // private url = "http://localhost:8080/"
     constructor(http) {
         this.http = http;
-        // private url = 'https://sba-spell-checker-api.herokuapp.com/'
-        this.url = "http://localhost:8080/";
+        this.url = 'https://sba-spell-checker-api.herokuapp.com/';
     }
     checkContent(request) {
         return this.http.put(this.url, request);

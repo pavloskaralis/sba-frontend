@@ -132,8 +132,8 @@ export class ContentComponent implements OnInit {
             configuredResponse.push(result);
         }
       }
-      //don't consider ignored words as misspelled or numbers
-      if((this.ignored.indexOf(result.word) !== -1) || result.word.match(/^\d+$/)) result.misspelled = false; 
+      //don't consider ignored words as misspelled
+      if(this.ignored.indexOf(result.word) !== -1) result.misspelled = false; 
       //add space between words except for end
       if(result.misspelled) configuredResponse.push(createResult(""));
     }

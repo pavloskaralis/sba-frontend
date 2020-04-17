@@ -838,10 +838,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 result.word = request;
                 configuredResponse.push(result);
               }
-            } //don't consider ignored words as misspelled or numbers
+            } //don't consider ignored words as misspelled
 
 
-            if (this.ignored.indexOf(result.word) !== -1 || result.word.match(/^\d+$/)) result.misspelled = false; //add space between words except for end
+            if (this.ignored.indexOf(result.word) !== -1) result.misspelled = false; //add space between words except for end
 
             if (result.misspelled) configuredResponse.push(createResult(""));
           }
@@ -1215,12 +1215,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
 
     var DictionaryService = /*#__PURE__*/function () {
+      // private url = "http://localhost:8080/"
       function DictionaryService(http) {
         _classCallCheck(this, DictionaryService);
 
-        this.http = http; // private url = 'https://sba-spell-checker-api.herokuapp.com/'
-
-        this.url = "http://localhost:8080/";
+        this.http = http;
+        this.url = 'https://sba-spell-checker-api.herokuapp.com/';
       }
 
       _createClass(DictionaryService, [{

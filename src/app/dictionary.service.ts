@@ -8,8 +8,8 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class DictionaryService {
-  // private url = 'https://sba-spell-checker-api.herokuapp.com/'
-  private url = "http://localhost:8080/"
+  private url = 'https://sba-spell-checker-api.herokuapp.com/'
+  // private url = "http://localhost:8080/"
   constructor(private http: HttpClient) { }
 
   checkContent (request) {
