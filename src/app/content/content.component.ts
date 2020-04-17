@@ -50,12 +50,12 @@ export class ContentComponent implements OnInit {
   }
   //configure text content for api request
   setContent () {
-    // console.log("Live:",this.contentBody.nativeElement.textContent)
+    console.log("Live:",this.contentBody.nativeElement.textContent)
     let noTrim = this.contentBody.nativeElement.textContent.replace(/(No\sSuggestions)/g,"NoSuggestions").replace(/[^(No)]Suggestions.+?[^(Found)](Ignore|Submit)/g," ").replace(/NoSuggestions\s(FoundIgnore|FoundSubmit)/g," ");
     if(noTrim) this.lastChar = noTrim.split("")[noTrim.length -1].charCodeAt(0);
     setTimeout( ()=> {
       this.content = noTrim.replace(/\s{2,}/g," ").replace(/\u00A0/g," ").trim();
-      // console.log("set:", this.content)      
+      console.log("set:", this.content)      
       this.splitContent = this.content.split(/\s+/);
       // console.log("split",this.splitContent);
       this.setWordCount();
@@ -132,8 +132,8 @@ export class ContentComponent implements OnInit {
             configuredResponse.push(result);
         }
       }
-      //don't consider ignored words as misspelled
-      if(this.ignored.indexOf(result.word) !== -1) result.misspelled = false; 
+      //don't consider ignored words as misspelled or numbers
+      if((this.ignored.indexOf(result.word) !== -1) || result.word.match(/^\d+$/)) result.misspelled = false; 
       //add space between words except for end
       if(result.misspelled) configuredResponse.push(createResult(""));
     }
