@@ -738,11 +738,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (noTrim) this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
           setTimeout(function () {
             var collate = new Intl.Collator();
-            _this2.content = noTrim.replace(/\u00A0+/g, " ").replace(/\s{2,}/g, " ").trim(); // console.log("set:", this.content)      
-
+            _this2.content = noTrim.replace(/\u00A0+/g, " ").replace(/\u3000/g, " ").replace(/\s{2,}/g, " ").trim();
+            console.log("set:", _this2.content);
             _this2.splitContent = _this2.content.split(/\s+/); // console.log("split",this.splitContent);
 
             _this2.setWordCount();
+
+            for (var i = 0; i < 20; i++) {
+              console.log(_this2.content.charCodeAt(i));
+            }
           }, 0);
         }
       }, {

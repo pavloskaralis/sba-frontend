@@ -378,11 +378,14 @@ class ContentComponent {
             this.lastChar = noTrim.split("")[noTrim.length - 1].charCodeAt(0);
         setTimeout(() => {
             let collate = new Intl.Collator();
-            this.content = noTrim.replace(/\u00A0+/g, " ").replace(/\s{2,}/g, " ").trim();
-            // console.log("set:", this.content)      
+            this.content = noTrim.replace(/\u00A0+/g, " ").replace(/\u3000/g, " ").replace(/\s{2,}/g, " ").trim();
+            console.log("set:", this.content);
             this.splitContent = this.content.split(/\s+/);
             // console.log("split",this.splitContent);
             this.setWordCount();
+            for (let i = 0; i < 20; i++) {
+                console.log(this.content.charCodeAt(i));
+            }
         }, 0);
     }
     setWordCount() {
