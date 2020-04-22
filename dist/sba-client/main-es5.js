@@ -760,7 +760,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           // this.popup = false;
           this.status = {
             message: "Loading...",
-            type: "checl"
+            type: "check"
           };
           this.loading = true;
           if (this.content.length === 0) this.content = " ";
@@ -859,6 +859,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function addIgnored(ignored) {
           // console.log("ignore received")
           this.ignored.push(ignored);
+          this.response.forEach(function (response) {
+            if (response.word === ignored && response.misspelled) response.misspelled = false;
+          });
         } //copy button
 
       }, {

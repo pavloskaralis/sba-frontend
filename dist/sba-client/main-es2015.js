@@ -392,7 +392,7 @@ class ContentComponent {
     checkContent() {
         //configure to empty stay
         // this.popup = false;
-        this.status = { message: "Loading...", type: "checl" };
+        this.status = { message: "Loading...", type: "check" };
         this.loading = true;
         if (this.content.length === 0)
             this.content = " ";
@@ -469,6 +469,10 @@ class ContentComponent {
     addIgnored(ignored) {
         // console.log("ignore received")
         this.ignored.push(ignored);
+        this.response.forEach(response => {
+            if (response.word === ignored && response.misspelled)
+                response.misspelled = false;
+        });
     }
     //copy button
     copyContent() {
